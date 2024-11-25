@@ -1,0 +1,33 @@
+version: '3.2'
+
+services:
+  wordpress:
+    build: .
+    ports:
+      - "85:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: Ammy@123
+      WORDPRESS_DB_NAME: test
+    volumes:
+      - wordpress-vol:/var/www/html/wordpress
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: Ammy@123
+      MYSQL_DATABASE: test
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: Ammy@123
+    volumes:
+      - db-vol:/var/lib/mysql
+    restart: always
+
+volumes:
+  wordpress-vol:
+  db-vol:
+
